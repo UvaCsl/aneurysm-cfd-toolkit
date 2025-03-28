@@ -1,0 +1,8 @@
+pydantic
+pyvista
+vtk
+vmtk
+tqdm
+pandas
+numpy
+matplotlib
