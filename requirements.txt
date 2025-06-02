@@ -6,3 +6,5 @@ tqdm
 pandas
 numpy
 matplotlib
+tetgen
+pymeshfix

@@ -3,14 +3,15 @@ from scan2cfd import Scan2CFD
 import os
 from multiprocessing import Pool, cpu_count
 
-def process_file(session_name, input_file, output_folder):
-    session = Scan2CFD(session_name=session_name, input_file=input_file, output_folder=output_folder)
-    session.run()
+def process_file(session_name, input_file, output_folder, use_cache: bool):
+    session = Scan2CFD(session_name=session_name, input_file=input_file, output_folder=output_folder, use_cache=use_cache)
+    session.run_using_meshfix()
 
 def main():
     parser = argparse.ArgumentParser(description='Convert WRL or VTK mesh to CFD simulation')
     parser.add_argument('-i', '--input', type=str, required=True, help='Input WRL file or directory')
     parser.add_argument('-o', '--output', type=str, required=True, help='Output directory')
+    parser.add_argument('--cache', action='store_true', help='Whether to re-use cached files of previous run of this file (do not use if you wish to regenerate intermediary or final meshes)')
     args = parser.parse_args()
 
     input_path = args.input
@@ -31,14 +32,16 @@ def main():
     if len(files) == 1:
         file_name = os.path.splitext(os.path.basename(files[0]))[0]
         session_name = file_name
-        process_file(session_name=session_name, input_file=files[0], output_folder=output_dir)
+        process_file(session_name=session_name, input_file=files[0], output_folder=output_dir, use_cache=args.cache)
     else:
         with Pool(processes=n_procs) as pool:
             for file in files:
+                print(f'Launching process for file {file}')
                 input_file = os.path.join(input_path, file) if os.path.isdir(input_path) else file
                 file_name = os.path.splitext(os.path.basename(file))[0]
                 session_name = file_name
-                pool.apply_async(process_file, args=(session_name, input_file, output_dir))
+                pool.apply_async(process_file, args=(session_name, input_file, output_dir, args.cache))
+    
             pool.close()
             pool.join()
 
