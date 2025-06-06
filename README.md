@@ -68,11 +68,12 @@ The mesh processing logic is implemented in the `mesh_processing.py` file, notab
 | 1    | pyvista   | Polydata.connectivity  | select (largest) connected mesh             | this removes initial undesireable fragments of unconnected mesh                                                |
 | 2    | pyvista   | Polydata.clean         | removes undesirable mesh components         | merges duplicate points, removes unused points, removes degenerate cells                                       |
 | 3    | pyvista   | Polydata.smooth_taubin | smoothenes surface of mesh                  | does not alter volume unlike Laplacian smoothing which may be considered a more aggressive smoothing technique |
-| 4    | vmtk      | vmtkCenterlines        | calculate centerlines of vascular structure | very few alternatives to this function, it is very good at inferring the centerlines also for bifurcations     |
-| 5    | vmtk      | vmtkEndpointExtractor  | extract endpoints                           | endpoints as defined by centerpoints on in and outlets                                                         |
-| 6    | vmtk      | vmtkFlowExtensions     | add tubular extensions                      | helps for smooth in and outflow handling without causing undesired flow disturbance from boundary conditions   |
-| 7    | pymeshfix | MeshFix.repair         | repair mesh through various steps           | very good at helping to keep mesh manifold                                                                     |
-| 8    | vmtk      | vmtkSurfaceRemeshing   | remesh surface                              | scale mesh resolution and make it as uniform and stable for simulation as possible                             |
+| 4 | pyvista | Polydata.decimate | reduce number of cells | reduces computational burden while maintaining sufficient resolution for simulation |
+| 5    | vmtk      | vmtkCenterlines        | calculate centerlines of vascular structure | very few alternatives to this function, it is very good at inferring the centerlines also for bifurcations     |
+| 6    | vmtk      | vmtkEndpointExtractor  | extract endpoints                           | endpoints as defined by centerpoints on in and outlets                                                         |
+| 7    | vmtk      | vmtkFlowExtensions     | add tubular extensions                      | helps for smooth in and outflow handling without causing undesired flow disturbance from boundary conditions   |
+| 8    | pymeshfix | MeshFix.repair         | repair mesh through various steps           | very good at helping to keep mesh manifold                                                                     |
+| 9    | vmtk      | vmtkSurfaceRemeshing   | remesh surface                              | scale mesh resolution and make it as uniform and stable for simulation as possible                             |
 
 
 
