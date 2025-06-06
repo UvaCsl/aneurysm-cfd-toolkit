@@ -1,11 +1,11 @@
 import argparse
-from scan2cfd import Scan2CFD
+from mesh_processing import ProcessingSession
 import os
 from multiprocessing import Pool, cpu_count
 
 def process_file(session_name, input_file, output_folder, use_cache: bool):
-    session = Scan2CFD(session_name=session_name, input_file=input_file, output_folder=output_folder, use_cache=use_cache)
-    session.run_using_meshfix()
+    session = ProcessingSession(session_name=session_name, input_file=input_file, output_folder=output_folder, use_cache=use_cache)
+    session.run()
 
 def main():
     parser = argparse.ArgumentParser(description='Convert WRL or VTK mesh to CFD simulation')
