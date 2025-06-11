@@ -240,8 +240,8 @@ class ProcessingSession():
         plotter.link_views()
         if view:
             plotter.show(auto_close=True)
-        plotter.save_graphic(os.path.join(self.media_folder, f'{self.session_name}_step_diff_viz.svg'))
-        plotter.close()
+        # plotter.save_graphic(os.path.join(self.media_folder, f'{self.session_name}_step_diff_viz.svg'))
+        # plotter.close()
 
 
     def _update_statistics(self):
